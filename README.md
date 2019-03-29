@@ -1,11 +1,11 @@
 # Navigator
 
-The Navigator class’s single purpose is to facilitate navigating (push, present modal, popover, and child/container) from one view controller from outside of those view controllers.
+The Navigator class’s single purpose is to facilitate navigating (push, present modal, popover, and child/container) from one view controller to another from outside of those view controllers.
 
 ## The Problem
 
 ### Xcode’s default approach
-A project created with Xcode automatically marks the `AppDelegate` as the app’s entry point with `@UIApplicationMain`. The problem is that it also binds the storyboard defined by the *Main Interface* setting to the `AppDelegate`’s `UIWindow` member variable. The consequence of this is that the root navigation controller used for all navigation now resides at `AppDelegate`’s `window?.rootViewController?.navigationController` property. Rather than accessing this member variable navigation is often performed from within a view controller e.g. `viewController.push(destinationViewController, animated: true)`.  Apple’s [View Controller Programming Guid for iOS](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457-CH2-SW1) states:
+A project created with Xcode automatically marks the `AppDelegate` as the app’s entry point with `@UIApplicationMain`. The problem is that it also binds the storyboard defined by the *Main Interface* setting to the `AppDelegate`’s `UIWindow` member variable. The consequence of this is that the root navigation controller used for all navigation now resides at `AppDelegate`’s `window?.rootViewController?.navigationController` property. Rather than accessing this member variable navigation is often performed from within a view controller e.g. `viewController.push(destinationViewController, animated: true)`.   Apple’s [View Controller Programming Guide for iOS](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457-CH2-SW1) states:
 
 <blockquote>
 • The shouldPerformSegueWithIdentifier:sender: method gives you an opportunity to prevent a segue from happening. Returning NO from this method causes the segue to fail quietly but does not prevent other actions from happening. For example, a tap in a table row still causes the table to call any relevant delegate methods.
@@ -29,19 +29,22 @@ Clear the *Main Interface* setting and remove the `AppDelegate`’s `UIWindow` m
 
 `Navigator` provides a configuration callback that allows concerns to be set externally e.g.:
 ```swift
-navigator.push() { vc in
-    vc.delegate = self
-    vc.data = viewModel
+navigator.push() { viewController in
+    viewController.delegate = self
+    viewController.data = viewModel
 }
 ```
 This prevents `UIViewController` from having knowledge of external concerns e.g. data layer, delegates, view model transformations, etc.
 
 `Navigator` also encapsulates re-occurring implementation details as well as pitfalls including:
-1. Consistent API for push, presentModal,
-1. Checking storyboards *Is Initial View Controller* setting.
-1. Checking storyboards *Custom Class* setting.
+1. Optionally loads storyboards.
+1. Optionally wrap view controllers with `UINavigationController` so storyboards don't need them.
+1. Consistent API for push, presentModal, popover, and add/remove child.
+1. `preconditionFailure` for *Is Initial View Controller* setting.
+1. `preconditionFailure` for *Custom Class* setting.
+1. Exposes completion blocks called when did load.
 1. Ensuring popovers implement `UIPopoverPresentationControllerDelegate` and `modalPresentationStyle`.
+1. Handles popover anchors as `UIBarButtonItem` or `UIView`.
 1. Ensuring view controllers are fully formed with `loadViewIfNeeded()`.
-1. Preventing sluggish behavior of empty view controllers.
-1. Adding `preconditionFailure`s.
+1. Preventing sluggish behavior caused by empty view controllers.
 1. Container view controller details like matching `didMove(toParent)` and `willMove(toParent)`.

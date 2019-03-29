@@ -29,9 +29,9 @@ Clear the *Main Interface* setting and remove the `AppDelegate`’s `UIWindow` m
 
 `Navigator` provides a configuration callback that allows concerns to be set externally e.g.:
 ```swift
-navigator.push() { vc in
-    vc.delegate = self
-    vc.data = viewModel
+navigator.push() { viewController in
+    viewController.delegate = self
+    viewController.data = viewModel
 }
 ```
 This prevents `UIViewController` from having knowledge of external concerns e.g. data layer, delegates, view model transformations, etc.

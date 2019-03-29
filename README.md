@@ -1,6 +1,6 @@
 # Navigator
 
-The Navigator class’s single purpose is to facilitate navigating (push, present modal, popover, and child/container) from one view controller from outside of those view controllers.
+The Navigator class’s single purpose is to facilitate navigating (push, present modal, popover, and child/container) from one view controller to another from outside of those view controllers.
 
 ## The Problem
 

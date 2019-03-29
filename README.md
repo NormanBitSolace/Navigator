@@ -37,11 +37,10 @@ navigator.push() { vc in
 This prevents `UIViewController` from having knowledge of external concerns e.g. data layer, delegates, view model transformations, etc.
 
 `Navigator` also encapsulates re-occurring implementation details as well as pitfalls including:
-1. Consistent API for push, presentModal,
-1. Checking storyboards *Is Initial View Controller* setting.
-1. Checking storyboards *Custom Class* setting.
+1. Consistent API for push, presentModal, popover, and add/remove child
+1. `preconditionFailure` for *Is Initial View Controller* setting.
+1. `preconditionFailure` for *Custom Class* setting.
 1. Ensuring popovers implement `UIPopoverPresentationControllerDelegate` and `modalPresentationStyle`.
 1. Ensuring view controllers are fully formed with `loadViewIfNeeded()`.
-1. Preventing sluggish behavior of empty view controllers.
-1. Adding `preconditionFailure`s.
+1. Preventing sluggish behavior caused by empty view controllers.
 1. Container view controller details like matching `didMove(toParent)` and `willMove(toParent)`.

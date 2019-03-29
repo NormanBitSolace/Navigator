@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yl3-Ru-EkN">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Button View Controller-->
+        <scene sceneID="tjm-KQ-fv6">
+            <objects>
+                <viewController id="Yl3-Ru-EkN" customClass="ButtonViewController" customModule="Navigator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eXh-mb-aKf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xjo-a5-PHh">
+                                <rect key="frame" x="151" y="323.5" width="73" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Tap Me"/>
+                                <connections>
+                                    <action selector="buttonTap:" destination="Yl3-Ru-EkN" eventType="touchUpInside" id="2FZ-aV-0aO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Xjo-a5-PHh" firstAttribute="centerX" secondItem="uai-1a-cum" secondAttribute="centerX" id="bZP-cv-UGn"/>
+                            <constraint firstItem="Xjo-a5-PHh" firstAttribute="centerY" secondItem="uai-1a-cum" secondAttribute="centerY" id="jHv-Px-5Ra"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uai-1a-cum"/>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="Xjo-a5-PHh" id="ZXa-jc-IyH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="776-bc-1Ch" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="119" y="108"/>
+        </scene>
+    </scenes>
+</document>

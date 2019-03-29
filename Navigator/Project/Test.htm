@@ -1,0 +1,16 @@
+<br/>
+<h1><b>One false premise...</b></h1>
+<br/>
+<br/>
+<h2>
+By default the AppDelegate's window property holds the root navigation controller responsible for all of an app's navigation!?! If an app uses this technique then view controllers are responsible for navigating (push, present, etc.) to other view controllers. This means view controllers potentially:
+<ul>
+    <li>Own navigation logic to know where to go next.</li>
+    <li>Have information about the next view controllers.</li>
+    <li>Provide the next view controllers with data.</li>
+    <li>Transform the next view controllers data into view model.</li>
+    <li>Set the next view controller's delegates.</li>
+    <li>Are not reusable.</li>
+    </ul>
+That's what the <b>Navigator</b> class is designed to prevent. It allows AppCoordinators, Presenters, FlowControllers, etc. to drive navigation externally from view controllers.
+</h2>

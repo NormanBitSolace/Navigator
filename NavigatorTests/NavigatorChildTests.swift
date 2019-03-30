@@ -8,7 +8,7 @@ class NavigatorChildTests: XCTestCase {
     override class func setUp() {
         super.setUp()
         Navigator.bundle = Bundle(for: NavigatorChildTests.self)
-        navigator.root(vc: OrangeViewController.self, storyboardName: "Orange") { _ in }
+        navigator.root(type: OrangeViewController.self, storyboardName: "Orange") { _ in }
     }
 
     override func setUp() { }

@@ -26,4 +26,9 @@ extension CGRect {
     func isOffBottom(_ container: CGRect) -> Bool {
         return maxY > container.maxY
     }
+    static func squareFitsInCircle(withDiameter diameter: CGFloat) -> CGRect {
+        // http://mathcentral.uregina.ca/QQ/database/QQ.09.04/bob1.html
+        let side = ((diameter * diameter) / 2).squareRoot()
+        return CGRect(origin: .zero, size: CGSize(width: side, height: side))
+    }
 }

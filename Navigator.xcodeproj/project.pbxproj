@@ -43,6 +43,13 @@
 		94339FA8224D896900B993D3 /* Test.htm in Resources */ = {isa = PBXBuildFile; fileRef = 94339FA7224D896900B993D3 /* Test.htm */; };
 		94339FAA224D9F6700B993D3 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94339FA9224D9F6700B993D3 /* Menu.storyboard */; };
 		94339FAC224DA2F100B993D3 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94339FAB224DA2F100B993D3 /* MenuViewController.swift */; };
+		94E41CF7224FE8D5006BD06B /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94E41CF6224FE8D5006BD06B /* Map.storyboard */; };
+		94E41CF9224FE925006BD06B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E41CF8224FE925006BD06B /* MapViewController.swift */; };
+		94E41CFB224FF7B2006BD06B /* ModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E41CFA224FF7B2006BD06B /* ModalAlertViewController.swift */; };
+		94E41CFD224FF7CF006BD06B /* ModalAlert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94E41CFC224FF7CF006BD06B /* ModalAlert.storyboard */; };
+		94E41CFF22501B8E006BD06B /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94E41CFE22501B8E006BD06B /* Search.storyboard */; };
+		94E41D0322501D03006BD06B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E41D0222501D03006BD06B /* SearchViewController.swift */; };
+		94E41D05225028E2006BD06B /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E41D04225028E2006BD06B /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +103,13 @@
 		94339FA7224D896900B993D3 /* Test.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Test.htm; sourceTree = "<group>"; };
 		94339FA9224D9F6700B993D3 /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		94339FAB224DA2F100B993D3 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		94E41CF6224FE8D5006BD06B /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
+		94E41CF8224FE925006BD06B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		94E41CFA224FF7B2006BD06B /* ModalAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalAlertViewController.swift; sourceTree = "<group>"; };
+		94E41CFC224FF7CF006BD06B /* ModalAlert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ModalAlert.storyboard; sourceTree = "<group>"; };
+		94E41CFE22501B8E006BD06B /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		94E41D0222501D03006BD06B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		94E41D04225028E2006BD06B /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,8 +176,14 @@
 				94339FA4224D823F00B993D3 /* Loading */,
 				94339F2E224C269700B993D3 /* Main.storyboard */,
 				94339F2D224C269700B993D3 /* MainViewController.swift */,
+				94E41CF6224FE8D5006BD06B /* Map.storyboard */,
+				94E41CF8224FE925006BD06B /* MapViewController.swift */,
 				94339FA9224D9F6700B993D3 /* Menu.storyboard */,
 				94339FAB224DA2F100B993D3 /* MenuViewController.swift */,
+				94E41CFC224FF7CF006BD06B /* ModalAlert.storyboard */,
+				94E41CFA224FF7B2006BD06B /* ModalAlertViewController.swift */,
+				94E41CFE22501B8E006BD06B /* Search.storyboard */,
+				94E41D0222501D03006BD06B /* SearchViewController.swift */,
 				94339F8D224D552500B993D3 /* ShowPopover.storyboard */,
 				94339F8C224D552500B993D3 /* ShowPopoverViewController.swift */,
 			);
@@ -235,6 +255,7 @@
 				94339F9A224D6D2300B993D3 /* UINavigationController+extensions.swift */,
 				94339F91224D5C0400B993D3 /* UIView+extensions.swift */,
 				94339FA5224D836C00B993D3 /* UIViewController+extensions.swift */,
+				94E41D04225028E2006BD06B /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -348,8 +369,11 @@
 				94339F9F224D7BA100B993D3 /* Loading.storyboard in Resources */,
 				94339F8F224D552500B993D3 /* ShowPopover.storyboard in Resources */,
 				94339F3F224C269700B993D3 /* Assets.xcassets in Resources */,
+				94E41CF7224FE8D5006BD06B /* Map.storyboard in Resources */,
 				94339F3B224C269700B993D3 /* Main.storyboard in Resources */,
 				94339FA8224D896900B993D3 /* Test.htm in Resources */,
+				94E41CFF22501B8E006BD06B /* Search.storyboard in Resources */,
+				94E41CFD224FF7CF006BD06B /* ModalAlert.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +395,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				94339F39224C269700B993D3 /* AppCoordinator.swift in Sources */,
+				94E41D05225028E2006BD06B /* Int+Extensions.swift in Sources */,
+				94E41CFB224FF7B2006BD06B /* ModalAlertViewController.swift in Sources */,
 				94339FAC224DA2F100B993D3 /* MenuViewController.swift in Sources */,
 				94339FA1224D7DC200B993D3 /* CGRect+extensions.swift in Sources */,
 				94339FA6224D836C00B993D3 /* UIViewController+extensions.swift in Sources */,
@@ -381,10 +407,12 @@
 				94339F3E224C269700B993D3 /* AppDelegate.swift in Sources */,
 				94339FA3224D801B00B993D3 /* LoadingPresenter.swift in Sources */,
 				94339F94224D5D9D00B993D3 /* ImageEmitterView.swift in Sources */,
+				94E41D0322501D03006BD06B /* SearchViewController.swift in Sources */,
 				94339F8E224D552500B993D3 /* ShowPopoverViewController.swift in Sources */,
 				94339F92224D5C0400B993D3 /* UIView+extensions.swift in Sources */,
 				94339F66224CA3BE00B993D3 /* PopoverViewController.swift in Sources */,
 				94339F3A224C269700B993D3 /* MainViewController.swift in Sources */,
+				94E41CF9224FE925006BD06B /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

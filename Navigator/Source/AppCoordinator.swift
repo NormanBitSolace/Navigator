@@ -1,4 +1,5 @@
 import UIKit
+import MapKit
 
 final class AppCoordinator: NSObject {
 
@@ -13,7 +14,7 @@ final class AppCoordinator: NSObject {
     }
 
     func start() {
-        navigator.root(vc: MainViewController.self, storyboardName: "Main") { vc in
+        navigator.root(type: MainViewController.self, storyboardName: "Main") { vc in
             vc.delegate = self
             vc.title = "Styles"
            self.dataService.viewControllerStyleList { models in
@@ -53,12 +54,26 @@ final class AppCoordinator: NSObject {
             vc.title = "HTML"
         }
     }
+
+    @objc func handleInfoTap() {
+        Navigator.presentModalOnCurrent(type: ModalAlertViewController.self, storyboardName: "ModalAlert") { vc in
+            vc.alertTitle = "Introducing Josie!"
+            vc.circleView.borderWidth = 18
+            vc.circleView.borderColor = .orange
+            vc.titleLabel.textColor = .orange
+        }
+    }
 }
 
 extension AppCoordinator: MainViewControllerDelegate {
 
     func viewControllerStyleChosen(_ model: ViewControllerStyleModel) {
         switch model.style {
+        case .search:
+            let _: SearchViewController = navigator.push(storyboardName: "Search") { vc in
+                vc.navigationController?.setLargeNavigation()
+                vc.title = "Numbers"
+            }
         case .email:
             navigator.topViewController?.email(address: "test@gmail.com", subject: "Navigator")
         case .popover:
@@ -72,19 +87,26 @@ extension AppCoordinator: MainViewControllerDelegate {
         case .html:
             showHtml()
         case .push:
-            navigator.push() { vc in
-                vc.view.addEmitterView(imageType: .confetti)
-                vc.title = "Confetti"
+            let _: MapViewController = navigator.push(storyboardName: "Map") { vc in
+                vc.navigationController?.setLargeNavigation()
+                vc.title = "Astro Doughnut"
+                vc.setAstroAnnotation()
             }
-       case .modal:
+        case .modal:
             navigator.presentModal(wrap: true) { vc in
                 vc.addDoneButton()
                 vc.navigationController?.setLargeNavigation()
                 vc.view.addEmitterView(imageType: .confetti)
                 vc.title = "Confetti"
             }
+        case .modalAlert:
+            let _: ModalAlertViewController = navigator.presentModal(storyboardName: "ModalAlert") { vc in
+                vc.alertTitle = "Touch to continue!"
+            }
         case .pushWithStoryBoard:
-            navigator.push(storyboardName: "Image")
+            navigator.push(storyboardName: "Image") { vc in
+                vc.rightButton(title: "Info", target: self, action: #selector(self.handleInfoTap))
+            }
         }
     }
 }

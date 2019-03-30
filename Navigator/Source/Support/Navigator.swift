@@ -14,7 +14,7 @@ public class Navigator: NSObject {
 
     // Wraps vc in UINavigationController if one doesn't exist, a single vc app doesn't require Navigator's functionality.
     @discardableResult
-    public func root<T: UIViewController>(vc: T.Type, storyboardName: String? = nil, configure: Configure<T> = nil) -> T {
+    public func root<T: UIViewController>(type: T.Type, storyboardName: String? = nil, configure: Configure<T> = nil) -> T {
         window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
         var rootVC: T
@@ -130,8 +130,6 @@ extension Navigator {   //  POPOVER
             }
         }
         topViewController?.present(target, animated: animated, completion: vcCompletion)
-        //  TODO figure out why vc vs nvc
-//        rootNavigationController.presentedViewController?.present(target, animated: animated, completion: completion)
         return vc
     }
 }
@@ -167,6 +165,32 @@ extension Navigator {   //  CHILD
             vc.view.removeFromSuperview()
             vc.removeFromParent()
             completion?()
+        }
+    }
+}
+
+/*
+     Provides a way to show a modal view controller on top of the current window without requiring a Navigator instance.
+ */
+extension Navigator {
+    static public func presentModalOnCurrent<T: UIViewController>(type: T.Type, storyboardName: String, wrap: Bool = false, animated: Bool = true, completion: Completion<T> = nil, configure: Configure<T> = nil) {
+        if let window = UIApplication.shared.keyWindow {
+            if let parentVC = window.rootViewController {
+                let vc = UIViewController.loadStoryboard(storyboardName) as T
+                vc.loadViewIfNeeded()
+                vc.view.frame = parentVC.view.bounds
+                if let configure = configure {
+                    vc.loadViewIfNeeded()
+                    configure(vc)
+                }
+                var vcCompletion: (()->())? = nil
+                if let completion = completion {
+                    vcCompletion = {
+                        completion(vc)
+                    }
+                }
+               parentVC.present(vc, animated: animated, completion: vcCompletion)
+            }
         }
     }
 }

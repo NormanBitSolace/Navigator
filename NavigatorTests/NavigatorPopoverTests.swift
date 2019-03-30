@@ -9,7 +9,7 @@ class NavigatorPopoverTests: XCTestCase {
     override class func setUp() {
         super.setUp()
         Navigator.bundle = Bundle(for: NavigatorPopoverTests.self)
-        navigator.root(vc: ButtonViewController.self, storyboardName: "Button") { vc in
+        navigator.root(type: ButtonViewController.self, storyboardName: "Button") { vc in
             anchor = vc.button
         }
     }

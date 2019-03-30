@@ -186,6 +186,13 @@ class AddTapAction: UIView {
 
 }
 
+extension UIView {
+    func applyTapGesture(target: Any, action: Selector) {
+        let gesture = UITapGestureRecognizer(target: target, action:  action)
+        addGestureRecognizer(gesture)
+    }
+}
+
 // Use blocks with UIControls e.g. button.addAction { print("touched") }
 class ClosureSleeve {
     let closure: () -> ()

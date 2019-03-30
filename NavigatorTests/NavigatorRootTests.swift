@@ -12,14 +12,14 @@ class NavigatorRootTests: XCTestCase {
 
     func testRootViewController() {
 //        let navigator = Navigator()
-        let vcInferred = navigator.root(vc: UIViewController.self)
+        let vcInferred = navigator.root(type: UIViewController.self)
         XCTAssertNotNil(vcInferred)
         XCTAssertEqual("UIViewController", String(describing: vcInferred.classForCoder))
         guard let nc = vcInferred.navigationController else { preconditionFailure("Test failed.")}
         XCTAssertNotNil(nc)
         XCTAssertEqual("UINavigationController", String(describing: nc.classForCoder))
 
-        let vc: UIViewController = navigator.root(vc: UIViewController.self)
+        let vc: UIViewController = navigator.root(type: UIViewController.self)
         XCTAssertNotNil(vc)
         XCTAssertEqual("UIViewController", String(describing: vc.classForCoder))
         guard let nc1 = vc.navigationController else { preconditionFailure("Test failed.")}
@@ -29,7 +29,7 @@ class NavigatorRootTests: XCTestCase {
 
     func testCustomRootViewController() {
 //        let navigator = Navigator()
-        let vc = navigator.root(vc: OrangeViewController.self)
+        let vc = navigator.root(type: OrangeViewController.self)
         XCTAssertNotNil(vc)
         XCTAssertEqual("OrangeViewController", String(describing: vc.classForCoder))
         guard let nc = vc.navigationController else { preconditionFailure("Test failed.")}
@@ -39,7 +39,7 @@ class NavigatorRootTests: XCTestCase {
 
     func testCustomRootViewControllerStoryboard() {
 //        let navigator = Navigator()
-        let vc = navigator.root(vc: OrangeViewController.self, storyboardName: "Orange")
+        let vc = navigator.root(type: OrangeViewController.self, storyboardName: "Orange")
         XCTAssertNotNil(vc)
         XCTAssertEqual("OrangeViewController", String(describing: vc.classForCoder))
         guard let nc = vc.navigationController else { preconditionFailure("Test failed.")}
@@ -49,7 +49,7 @@ class NavigatorRootTests: XCTestCase {
 
     func testRootUIViewControllerConfigure() {
 //        let navigator = Navigator()
-        navigator.root(vc: UIViewController.self) { vc in
+        navigator.root(type: UIViewController.self) { vc in
             XCTAssertNotNil(vc)
             XCTAssertEqual("UIViewController", String(describing: vc.classForCoder))
             guard let nc = vc.navigationController else { preconditionFailure("Test failed.")}
@@ -60,7 +60,7 @@ class NavigatorRootTests: XCTestCase {
 
     func testRootCustomViewControllerConfigure() {
 //        let navigator = Navigator()
-        navigator.root(vc: OrangeViewController.self) { vc in
+        navigator.root(type: OrangeViewController.self) { vc in
             XCTAssertNotNil(vc)
             XCTAssertEqual("OrangeViewController", String(describing: vc.classForCoder))
             guard let nc = vc.navigationController else { preconditionFailure("Test failed.")}
@@ -71,11 +71,11 @@ class NavigatorRootTests: XCTestCase {
 
     func testRootWithStoryboardConfigure() {
 //        let navigator = Navigator()
-        navigator.root(vc: OrangeViewController.self, storyboardName: "Orange") { vc in
+        navigator.root(type: OrangeViewController.self, storyboardName: "Orange") { vc in
             XCTAssertNotNil(vc)
             XCTAssertEqual("OrangeViewController", String(describing: vc.classForCoder))
         }
-        navigator.root(vc: OrangeViewController.self, storyboardName: "Orange") { vc in
+        navigator.root(type: OrangeViewController.self, storyboardName: "Orange") { vc in
             XCTAssertNotNil(vc)
             XCTAssertEqual("OrangeViewController", String(describing: vc.classForCoder))
         }

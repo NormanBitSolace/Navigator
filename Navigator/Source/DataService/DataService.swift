@@ -6,12 +6,12 @@ protocol DataService: class {
 
 enum ViewControllerStyle: Int {
     case popover
-    case modal
+    case modal, modalAlert, search
     case push, pushWithStoryBoard
     case childLoading
     case email, html
 
-    // setting data, UI from REST API
+    // search view, setting data, UI from REST API
 }
 
 struct ViewControllerStyleModel {
@@ -24,8 +24,10 @@ class DataServiceImpl: DataService {
         var a = [ViewControllerStyleModel]()
 
         a.append(ViewControllerStyleModel(title: "Popover", style: .popover))
-        a.append(ViewControllerStyleModel(title: "Modal", style: .modal))
-        a.append(ViewControllerStyleModel(title: "Push", style: .push))
+        a.append(ViewControllerStyleModel(title: "Search", style: .search))
+        a.append(ViewControllerStyleModel(title: "Modal alert", style: .modalAlert))
+        a.append(ViewControllerStyleModel(title: "Modal celebration", style: .modal))
+        a.append(ViewControllerStyleModel(title: "Push map", style: .push))
         a.append(ViewControllerStyleModel(title: "Push with storyboard", style: .pushWithStoryBoard))
         a.append(ViewControllerStyleModel(title: "Toggle loading view controller", style: .childLoading))
         a.append(ViewControllerStyleModel(title: "Send an email", style: .email))

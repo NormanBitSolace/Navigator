@@ -18,6 +18,7 @@ Inherent in this is:
 1. A view controller have logic to decide the next view controller.
 1. A view controller have data to pass to the next view controller.
 1. A view controller have knowledge of the next view controller e.g. it’s type and delegate requirements.
+1. Data fetching becomes tied to a view controller's life cycle events e.g. `viewWillAppear`.
 
 ## A Solution
 

@@ -15,6 +15,14 @@ class NavigatorPushTests: XCTestCase {
 
     override func tearDown() { }
 
+    func testPushUIViewControllerCompletion() {
+        let _: CompletionViewController = NavigatorPushTests.navigator.push(completion: { vc in
+            XCTAssertTrue(vc.loaded)
+            XCTAssertTrue(vc.didWillAppear)
+            XCTAssertTrue(vc.didAppear)
+        })
+    }
+
     func testPushUIViewController() {
         let vcInferred = NavigatorPushTests.navigator.push()
         XCTAssertNotNil(vcInferred)

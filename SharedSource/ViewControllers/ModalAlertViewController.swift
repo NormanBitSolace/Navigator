@@ -15,11 +15,11 @@ class CircleView: UIView {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let w = bounds.size.width
-        layer.cornerRadius = w / 2.0
+        let wid = bounds.size.width
+        layer.cornerRadius = wid / 2.0
         layer.borderColor = borderColor.cgColor
         layer.borderWidth = borderWidth
-        labelWidthConstraint.constant = CGRect.squareFitsInCircle(withDiameter: w - borderWidth*2).size.width
+        labelWidthConstraint.constant = CGRect.squareFitsInCircle(withDiameter: wid - borderWidth*2).size.width
     }
 }
 
@@ -42,5 +42,3 @@ class ModalAlertViewController: UIViewController {
         view.applyTapGesture(target: self, action: #selector(handleTap))
     }
 }
-
-

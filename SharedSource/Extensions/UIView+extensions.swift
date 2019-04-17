@@ -21,10 +21,11 @@ extension UIView {
         }
     }
 
-    func constrainToCenter(to parent: UIView) {
+    func constrainToCenter(to parent: UIView, dx: CGFloat = 0,
+                           dy: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
-        centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        centerXAnchor.constraint(equalTo: parent.centerXAnchor, constant: dx).isActive = true
+        centerYAnchor.constraint(equalTo: parent.centerYAnchor, constant: dy).isActive = true
     }
 
     func constrainToParentBounds(_ child: UIView) {
@@ -50,7 +51,7 @@ extension UIView {
     @discardableResult func addExternalBorder(borderWidth: CGFloat = 2.0, borderColor: UIColor = .white) -> CALayer {
         let gap = borderWidth + 1.0
         let externalBorder = CALayer()
-        externalBorder.frame = CGRect(x:-gap, y:-gap, width:frame.size.width + 2 * gap, height:frame.size.height + 2 * gap)
+        externalBorder.frame = CGRect(x: -gap, y: -gap, width: frame.size.width + 2 * gap, height: frame.size.height + 2 * gap)
         externalBorder.borderColor = borderColor.cgColor
         externalBorder.borderWidth = borderWidth
         externalBorder.name = "externalBorder"
@@ -62,7 +63,7 @@ extension UIView {
     }
 
     func removeExternalBorders() {
-        layer.sublayers?.filter() { $0.name == "externalBorder" }.forEach() {
+        layer.sublayers?.filter { $0.name == "externalBorder" }.forEach {
             $0.removeFromSuperlayer()
         }
     }
@@ -115,11 +116,11 @@ public extension UIView {
 
     var centerX: CGFloat {
         get { return self.center.x }
-        set { self.center = CGPoint(x: newValue,y: self.centerY) }
+        set { self.center = CGPoint(x: newValue, y: self.centerY) }
     }
     var centerY: CGFloat {
         get { return self.center.y }
-        set { self.center = CGPoint(x: self.centerX,y: newValue) }
+        set { self.center = CGPoint(x: self.centerX, y: newValue) }
     }
 
     var origin: CGPoint {
@@ -157,9 +158,10 @@ extension UIView {
  }
  */
 class AddTapAction: UIView {
-    var touchHandler: (()->Void)?
+    var touchHandler: (() -> Void)?
 
-    init(toView view: UIView, touchHandler: @escaping ()->Void) {
+    @discardableResult
+    init(toView view: UIView, touchHandler: @escaping () -> Void) {
         self.touchHandler = touchHandler
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -187,17 +189,24 @@ class AddTapAction: UIView {
 }
 
 extension UIView {
+    var borderUIColor: UIColor {
+        get { return UIColor(cgColor: layer.borderColor!) }
+        set { layer.borderColor = newValue.cgColor }
+    }
+}
+
+extension UIView {
     func applyTapGesture(target: Any, action: Selector) {
-        let gesture = UITapGestureRecognizer(target: target, action:  action)
+        let gesture = UITapGestureRecognizer(target: target, action: action)
         addGestureRecognizer(gesture)
     }
 }
 
 // Use blocks with UIControls e.g. button.addAction { print("touched") }
 class ClosureSleeve {
-    let closure: () -> ()
+    let closure: () -> Void
 
-    init(attachTo: AnyObject, closure: @escaping () -> ()) {
+    init(attachTo: AnyObject, closure: @escaping () -> Void) {
         self.closure = closure
         objc_setAssociatedObject(attachTo, "[\(arc4random())]", self, .OBJC_ASSOCIATION_RETAIN)
     }
@@ -208,9 +217,16 @@ class ClosureSleeve {
 }
 
 extension UIControl {
-    func addAction(for controlEvents: UIControl.Event = .primaryActionTriggered, action: @escaping () -> ()) {
+    func addAction(for controlEvents: UIControl.Event = .primaryActionTriggered, action: @escaping () -> Void) {
         let sleeve = ClosureSleeve(attachTo: self, closure: action)
         addTarget(sleeve, action: #selector(ClosureSleeve.invoke), for: controlEvents)
     }
 }
 
+extension UIBarButtonItem {
+    func addAction(act: @escaping () -> Void) {
+        let sleeve = ClosureSleeve(attachTo: self, closure: act)
+        self.action = #selector(ClosureSleeve.invoke)
+        target = sleeve
+    }
+}

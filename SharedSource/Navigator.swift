@@ -40,25 +40,27 @@ public class Navigator: NSObject {
 extension Navigator {   // PUSH
 
     @discardableResult
-    public func push<T: UIViewController>(animated: Bool = true, configure: Configure<T> = nil) -> T {
+    public func push<T: UIViewController>(animated: Bool = true, completion: Completion<T> = nil, configure: Configure<T> = nil) -> T {
         let vc = T.init()
          vc.edgesForExtendedLayout = []
         vc.view.backgroundColor = .white // empty vc can perform slugishly
-        return push(vc: vc, animated: animated, configure: configure)
+        return push(vc: vc, animated: animated, completion: completion, configure: configure)
     }
 
     @discardableResult
-    public func push<T: UIViewController>(storyboardName: String, animated: Bool = true, configure: Configure<T> = nil) -> T {
+    public func push<T: UIViewController>(storyboardName: String, animated: Bool = true, completion: Completion<T> = nil, configure: Configure<T> = nil) -> T {
         let vc = UIViewController.loadStoryboard(storyboardName) as T
-        return push(vc: vc, animated: animated, configure: configure)
+        return push(vc: vc, animated: animated, completion: completion, configure: configure)
     }
 
     @discardableResult
-    func push<T: UIViewController>(vc: T, animated: Bool = true, configure: Configure<T> = nil) -> T {
+    func push<T: UIViewController>(vc: T, animated: Bool = true, completion: Completion<T> = nil, configure: Configure<T> = nil) -> T {
         if let configure = configure {
             rootNavigationController.applyConfig(vc, configure: configure)
         }
-        rootNavigationController.pushViewController(vc, animated: animated)
+        rootNavigationController.pushViewController(viewController: vc, animated: animated) {
+            completion?(vc)
+        }
         return vc
     }
 }
@@ -88,13 +90,22 @@ extension Navigator {   //  MODAL
             rootNavigationController.applyConfig(vc, configure: configure)
         }
         let target = vc.navigationController ?? vc
-        var vcCompletion: (()->())? = nil
+        var vcCompletion: (() -> Void)?
         if let completion = completion {
             vcCompletion = {
                 completion(vc)
             }
         }
+
+        var topNC = rootNavigationController as UIViewController
+        if let presentedNC = rootNavigationController.presentedViewController {
+            topNC = presentedNC
+        }
+        // UIViewController.topMostController()?.present... works for Search when modal
+        topNC.present(target, animated: animated, completion: vcCompletion)
+/* TODO
         rootNavigationController.present(target, animated: animated, completion: vcCompletion)
+         */
         return vc
     }
 }
@@ -123,7 +134,7 @@ extension Navigator {   //  POPOVER
         if let configure = configure {
             rootNavigationController.applyConfig(vc, configure: configure)
         }
-        var vcCompletion: (()->())? = nil
+        var vcCompletion: (() -> Void)?
         if let completion = completion {
             vcCompletion = {
                 completion(vc)
@@ -159,7 +170,7 @@ extension Navigator {   //  CHILD
         vc.didMove(toParent: parentVC)
         return vc
     }
-    public func removeChildViewController(childViewController vc: UIViewController, completion: (() -> ())? = nil) {
+    public func removeChildViewController(childViewController vc: UIViewController, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             vc.willMove(toParent: nil)
             vc.view.removeFromSuperview()
@@ -173,25 +184,46 @@ extension Navigator {   //  CHILD
      Provides a way to show a modal view controller on top of the current window without requiring a Navigator instance.
  */
 extension Navigator {
-    static public func presentModalOnCurrent<T: UIViewController>(type: T.Type, storyboardName: String, wrap: Bool = false, animated: Bool = true, completion: Completion<T> = nil, configure: Configure<T> = nil) {
-        if let window = UIApplication.shared.keyWindow {
-            if let parentVC = window.rootViewController {
-                let vc = UIViewController.loadStoryboard(storyboardName) as T
-                vc.loadViewIfNeeded()
-                vc.view.frame = parentVC.view.bounds
-                if let configure = configure {
-                    vc.loadViewIfNeeded()
-                    configure(vc)
-                }
-                var vcCompletion: (()->())? = nil
-                if let completion = completion {
-                    vcCompletion = {
-                        completion(vc)
-                    }
-                }
-               parentVC.present(vc, animated: animated, completion: vcCompletion)
+    @discardableResult
+    static public func presentModalOnCurrent<T: UIViewController>(
+              type: T.Type? = nil,
+              storyboardName: String? = nil,
+              wrap: Bool = false,
+              animated: Bool = true,
+              completion: Completion<T> = nil,
+              configure: Configure<T> = nil) -> UIViewController? {
+        if let parentVC = UIViewController.topMostController() {
+            var vc: UIViewController
+            if let storyboardName = storyboardName {
+                vc = UIViewController.loadStoryboard(storyboardName) as T
+            } else if type != nil {
+                vc = T.init()
+            } else {
+                vc = UIViewController.init()
             }
+            if wrap {
+                _ = UINavigationController.init(rootViewController: vc)
+            }
+            vc.loadViewIfNeeded()
+            vc.view.frame = parentVC.view.bounds
+            if let configure = configure {
+                vc.loadViewIfNeeded()
+                // swiftlint:disable force_cast
+                configure(vc as! T)
+                // swiftlint:enable force_cast
+            }
+            var vcCompletion: (() -> Void)?
+            if let completion = completion {
+                vcCompletion = {
+                    // swiftlint:disable force_cast
+                    completion(vc as! T)
+                    // swiftlint:enable force_cast
+                }
+            }
+            parentVC.present(vc, animated: animated, completion: vcCompletion)
+            return vc
         }
+        return nil
     }
 }
 
@@ -266,5 +298,35 @@ extension Navigator {   //  ALERT
         let okAction = UIAlertAction(title: buttonLabel, style: .default, handler: handler)
         alertController.addAction(okAction)
         rootNavigationController.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension UINavigationController {
+
+    private func doAfterAnimatingTransition(animated: Bool, completion: @escaping (() -> Void)) {
+        if let coordinator = transitionCoordinator, animated {
+            coordinator.animate(alongsideTransition: nil, completion: { _ in
+                completion()
+            })
+        } else {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+
+    func pushViewController(viewController: UIViewController, animated: Bool, completion: @escaping (() ->  Void)) {
+        pushViewController(viewController, animated: animated)
+        doAfterAnimatingTransition(animated: animated, completion: completion)
+    }
+
+    func popViewController(animated: Bool, completion: @escaping (() -> Void)) {
+        popViewController(animated: animated)
+        doAfterAnimatingTransition(animated: animated, completion: completion)
+    }
+
+    func popToRootViewController(animated: Bool, completion: @escaping (() -> Void)) {
+        popToRootViewController(animated: animated)
+        doAfterAnimatingTransition(animated: animated, completion: completion)
     }
 }

@@ -1,13 +1,17 @@
 import UIKit
 
-class TableViewDelegate<ModelType, CellType>: NSObject, UITableViewDataSource, UITableViewDelegate {
+class TableViewDelegate<ModelType, CellType: UITableViewCell>: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     let cellIdentifier: String?
     let decorator: (UITableViewCell, ModelType) -> Void
     let touchDelegate: ((IndexPath, ModelType) -> Void)?
+    var swipeActions: [UITableViewRowAction]?
     var data: [ModelType]?
 
-    init<CellType: UITableViewCell>(data: [ModelType]? = nil, cellType: CellType.Type? = nil, decorator: @escaping (UITableViewCell, ModelType) -> Void, touchDelegate: ((IndexPath, ModelType) -> Void)?) {
+    init<CellType: UITableViewCell>(data: [ModelType]? = nil,
+                                    cellType: CellType.Type? = nil,
+                                    decorator: @escaping (UITableViewCell, ModelType) -> Void,
+                                    touchDelegate: ((IndexPath, ModelType) -> Void)?) {
         self.data = data
         self.cellIdentifier = cellType == nil ? nil : String(describing: CellType.self)
         self.decorator = decorator
@@ -21,12 +25,10 @@ class TableViewDelegate<ModelType, CellType>: NSObject, UITableViewDataSource, U
     final func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         if let identifier = cellIdentifier {
-            if let c = tableView.dequeueReusableCell(withIdentifier: identifier) as? CellType {
-                cell = c as! UITableViewCell
-            } else {
+            guard let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: identifier) as? CellType else {
                 preconditionFailure("Expected cell identifier to be named the same as it's type.")
             }
-
+            cell = dequeuedCell
         } else {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "generic")
         }
@@ -44,13 +46,15 @@ class TableViewDelegate<ModelType, CellType>: NSObject, UITableViewDataSource, U
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-
     final func setDelegate(_ tableView: UITableView) {
         tableView.delegate = self
         tableView.dataSource = self
     }
-}
 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        return swipeActions
+    }
+}
 extension UITableView {
     final func setAutoSizeHeight(_ estimatedRowHeight: CGFloat = 44) {
         self.estimatedRowHeight = estimatedRowHeight

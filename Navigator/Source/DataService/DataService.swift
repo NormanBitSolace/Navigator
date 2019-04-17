@@ -11,7 +11,7 @@ enum ViewControllerStyle: Int {
     case childLoading
     case email, html
 
-    // search view, setting data, UI from REST API
+    // page controller, master/detail, sprite scene, setting data, UI from REST API
 }
 
 struct ViewControllerStyleModel {

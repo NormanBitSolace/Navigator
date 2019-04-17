@@ -1,9 +1,18 @@
 import UIKit
 
+protocol SearchTouchDelegate: class {
+    func handleSearchTouch(value: String, vc: UIViewController)
+}
 class SearchViewController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     var dataDelegate: TableViewDelegate<String, UITableViewCell>!
-    let data = (1...100).map { $0.spellOut }
+    weak var delegate: SearchTouchDelegate?
+    var data: [String]? {
+        didSet {
+            dataDelegate.data = data
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,10 +22,15 @@ class SearchViewController: UITableViewController {
             decorator: { (cell, model) in
                 cell.textLabel?.text = model
         }, touchDelegate: { (indexPath, model) in
-            print(model)
+            self.delegate?.handleSearchTouch(value: model, vc: self)
         })
         tableView.setAutoSizeHeight()
         dataDelegate.setDelegate(tableView)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.becomeFirstResponder()
     }
 }
 
@@ -27,11 +41,7 @@ extension SearchViewController: UISearchBarDelegate {
             tableView.reloadData()
             return
         }
-        var includeNumbers = searchText.lowercased()
-        if let intRepresentation = Int(searchText) {
-            includeNumbers = intRepresentation.spellOut
-        }
-        let filteredData = data.filter { $0.contains(includeNumbers) }
+        let filteredData = data?.filter { $0.range(of: searchText, options: .caseInsensitive) != nil }
         dataDelegate.data = filteredData
         tableView.reloadData()
     }

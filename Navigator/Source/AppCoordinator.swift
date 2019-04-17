@@ -73,16 +73,21 @@ extension AppCoordinator: MainViewControllerDelegate {
             let _: SearchViewController = navigator.push(storyboardName: "Search") { vc in
                 vc.navigationController?.setLargeNavigation()
                 vc.title = "Numbers"
-            }
+                vc.data = (1...100).map { $0.spellOut }
+                vc.delegate = self
+                vc.addDoneButton()
+                vc.navigationItem.rightBarButtonItem?.addAction {
+                    vc.dismissViewController()
+                }
+           }
         case .email:
             navigator.topViewController?.email(address: "test@gmail.com", subject: "Navigator")
         case .popover:
             showPopoverController()
         case .childLoading:
-            if loadingPresenter.isShowing {
-                loadingPresenter.hide()
-            } else {
-                loadingPresenter.show()
+            loadingPresenter.show()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
+                self.loadingPresenter.hide()
             }
         case .html:
             showHtml()
@@ -108,5 +113,11 @@ extension AppCoordinator: MainViewControllerDelegate {
                 vc.rightButton(title: "Info", target: self, action: #selector(self.handleInfoTap))
             }
         }
+    }
+}
+
+extension AppCoordinator: SearchTouchDelegate {
+    func handleSearchTouch(value: String, vc: UIViewController) {
+        print(value)
     }
 }

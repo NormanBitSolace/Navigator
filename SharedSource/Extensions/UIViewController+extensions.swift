@@ -4,7 +4,7 @@ import MessageUI
 extension UIViewController {
     public func okAlert(title: String? = nil, message: String? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (result : UIAlertAction) -> Void in }
+        let okAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
@@ -13,9 +13,9 @@ extension UIViewController {
 extension UIViewController: MFMailComposeViewControllerDelegate {
     public func email(address: String, subject: String) {
         if MFMailComposeViewController.canSendMail() {
-            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-            let appName = Bundle.main.infoDictionary?["CFBundleName"] as! String
-            let subject = "\(subject) - \(appName) \(version) iOS: \(UIDevice.current.systemVersion)"
+            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"]
+            let appName = Bundle.main.infoDictionary?["CFBundleName"]
+            let subject = "\(subject) - \(appName ?? "unknown") \(version ?? "unknown") iOS: \(UIDevice.current.systemVersion)"
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([address])
@@ -33,13 +33,13 @@ extension UIViewController: MFMailComposeViewControllerDelegate {
 extension UIViewController {
 
     func rightButton(title: String?, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
-        let b = UIBarButtonItem(title: title, style: style, target: target, action: action)
-        navigationItem.rightBarButtonItem = b
+        let button = UIBarButtonItem(title: title, style: style, target: target, action: action)
+        navigationItem.rightBarButtonItem = button
     }
 
     func rightButton(systemItem: UIBarButtonItem.SystemItem, target: Any?, action: Selector?) {
-        let b = UIBarButtonItem(barButtonSystemItem: systemItem, target: target, action: action)
-        self.navigationItem.rightBarButtonItem = b
+        let button = UIBarButtonItem(barButtonSystemItem: systemItem, target: target, action: action)
+        self.navigationItem.rightBarButtonItem = button
     }
 
     func addDoneButton() {
@@ -53,5 +53,23 @@ extension UIViewController {
 
     @objc func dismissViewController() {
         self.dismiss(animated: true, completion: nil)
+    }
+
+    static func topMostController() -> UIViewController? {
+        guard let window = UIApplication.shared.keyWindow, let rootViewController = window.rootViewController else {
+            return nil
+        }
+        var topController = rootViewController
+        while let newTopController = topController.presentedViewController {
+            topController = newTopController
+        }
+        return topController
+    }
+
+    public func printTransitionStates() {
+        print("isBeingPresented=\(isBeingPresented)")
+        print("isBeingDismissed=\(isBeingDismissed)")
+        print("isMovingToParentViewController=\(isMovingToParent)")
+        print("isMovingFromParentViewController=\(isMovingFromParent)")
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Mem-w6-L35">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="S2W-G0-jIQ">
+            <objects>
+                <viewController id="Mem-w6-L35" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Nni-hn-tqF">
+                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="maz-G8-nzC">
+                                <rect key="frame" x="50" y="50" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Cb-58-CYI">
+                                <rect key="frame" x="20.5" y="77.5" width="79.5" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2Cb-58-CYI" firstAttribute="centerX" secondItem="maz-G8-nzC" secondAttribute="centerX" id="AM9-uw-HY7"/>
+                            <constraint firstItem="maz-G8-nzC" firstAttribute="centerY" secondItem="FFj-si-DQU" secondAttribute="centerY" id="AwT-3x-WoC"/>
+                            <constraint firstItem="maz-G8-nzC" firstAttribute="centerX" secondItem="FFj-si-DQU" secondAttribute="centerX" id="TrN-kw-Iol"/>
+                            <constraint firstItem="2Cb-58-CYI" firstAttribute="top" secondItem="maz-G8-nzC" secondAttribute="bottom" constant="7.5" id="koG-mV-hMG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FFj-si-DQU"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <size key="freeformSize" width="120" height="120"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UTL-cP-nij" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="242" y="197"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xle-GS-Gv2">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Modal Alert View Controller-->
+        <scene sceneID="VXz-IE-FWf">
+            <objects>
+                <viewController modalPresentationStyle="overFullScreen" id="xle-GS-Gv2" customClass="ModalAlertViewController" customModule="Navigator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="th0-fa-C1d">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gds-1C-tpL">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UTE-Oy-G46">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyB-2h-o5w" customClass="CircleView" customModule="Navigator" customModuleProvider="target">
+                                            <rect key="frame" x="32" y="112" width="256" height="256"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="XKa-yc-Dny">
+                                                    <rect key="frame" x="28" y="28" width="200" height="200"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="XKa-yc-Dny" secondAttribute="height" multiplier="1:1" id="3nt-dd-HYN"/>
+                                                        <constraint firstAttribute="width" constant="200" id="fSe-rK-CmS"/>
+                                                    </constraints>
+                                                    <string key="text">By the symmetry of the diagram the center of the circle D is on the diagonal AB of the square. Hence AB is a diagonal of the circle and thus its length of is 60 inches and the lengths of BC and CA are equal.</string>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="XKa-yc-Dny" firstAttribute="centerY" secondItem="cyB-2h-o5w" secondAttribute="centerY" id="9rM-qC-343"/>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="K2d-Ks-Gmc"/>
+                                                <constraint firstAttribute="width" secondItem="cyB-2h-o5w" secondAttribute="height" multiplier="1:1" id="idc-d2-ASR"/>
+                                                <constraint firstItem="XKa-yc-Dny" firstAttribute="centerX" secondItem="cyB-2h-o5w" secondAttribute="centerX" id="qzt-Kr-PZy"/>
+                                            </constraints>
+                                            <connections>
+                                                <outlet property="labelWidthConstraint" destination="fSe-rK-CmS" id="LS8-9y-N2T"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstItem="cyB-2h-o5w" firstAttribute="width" secondItem="UTE-Oy-G46" secondAttribute="width" multiplier="4/5" priority="250" id="BFf-kA-ZsF"/>
+                                        <constraint firstItem="cyB-2h-o5w" firstAttribute="centerY" secondItem="UTE-Oy-G46" secondAttribute="centerY" id="rGF-8l-Bx3"/>
+                                        <constraint firstItem="cyB-2h-o5w" firstAttribute="centerX" secondItem="UTE-Oy-G46" secondAttribute="centerX" id="rNZ-o0-XaL"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="extraLight"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gds-1C-tpL" firstAttribute="trailing" secondItem="4MT-64-Oaj" secondAttribute="trailing" id="KnH-59-1uY"/>
+                            <constraint firstAttribute="bottom" secondItem="gds-1C-tpL" secondAttribute="bottom" id="V8m-Jt-QBT"/>
+                            <constraint firstItem="gds-1C-tpL" firstAttribute="top" secondItem="th0-fa-C1d" secondAttribute="top" id="o3k-hL-4N3"/>
+                            <constraint firstItem="gds-1C-tpL" firstAttribute="leading" secondItem="4MT-64-Oaj" secondAttribute="leading" id="prl-Ja-4rB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4MT-64-Oaj"/>
+                    </view>
+                    <connections>
+                        <outlet property="circleView" destination="cyB-2h-o5w" id="z8z-Sn-nHd"/>
+                        <outlet property="titleLabel" destination="XKa-yc-Dny" id="hcP-Qs-8ml"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LvG-LI-fJ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-117.39130434782609" y="69.642857142857139"/>
+        </scene>
+    </scenes>
+</document>

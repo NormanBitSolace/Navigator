@@ -166,8 +166,8 @@
 				942EC7832268FE2300057E81 /* Navigator.swift */,
 			);
 			name = SharedSource;
-			path = ../../sharedsource/SharedSource;
-			sourceTree = "<group>";
+			path = Navigator/SharedSource;
+			sourceTree = SOURCE_ROOT;
 		};
 		942EC7632268FE2300057E81 /* Network */ = {
 			isa = PBXGroup;
